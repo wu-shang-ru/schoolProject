@@ -50,12 +50,38 @@
           <div class="col-lg-8 text-left">Dapibus ac facilisi</div>
         </div>
       </a>
-      <a href="#" class="list-group-item list-group-item-action">Vestibulum at eros</a>
-      <a href="#" class="list-group-item list-group-item-action">Vestibulum at eros</a>
-      <a href="#" class="list-group-item list-group-item-action">Vestibulum at eros</a>
-      <a href="#" class="list-group-item list-group-item-action">Vestibulum at eros</a>
-      <a href="#" class="list-group-item list-group-item-action">Vestibulum at eros</a>
-      <a href="#" class="list-group-item list-group-item-action">Vestibulum at eros</a>
+      <a href="#" class="list-group-item list-group-item-action">
+        <div class="row">
+          <div class="col-lg-1">
+            <img class="smallPicture" src="../assets/hao.jpg" alt="userPhoto" />
+          </div>
+          <div class="col-lg-3 text-left">123</div>
+          <div class="col-lg-8 text-left">Dapibus ac facilisi</div>
+        </div>
+      </a>
+      <a href="#" class="list-group-item list-group-item-action">
+        <div class="row">
+          <div class="col-lg-1">
+            <img class="smallPicture" src="../assets/hao.jpg" alt="userPhoto" />
+          </div>
+          <div class="col-lg-3 text-left">123</div>
+          <div class="col-lg-8 text-left">Dapibus ac facilisi</div>
+        </div>
+      </a>
+    </div>
+    <div class="btn-toolbar mt-3 center" role="toolbar" aria-label="Toolbar with button groups">
+      <div class="btn-group mr-2" role="group" aria-label="First group">
+        <button type="button" class="btn btn-secondary">1</button>
+        <button type="button" class="btn btn-secondary">2</button>
+        <button type="button" class="btn btn-secondary">3</button>
+        <button type="button" class="btn btn-secondary">4</button>
+        <button type="button" class="btn btn-secondary">5</button>
+        <button type="button" class="btn btn-secondary">6</button>
+        <button type="button" class="btn btn-secondary">7</button>
+        <button type="button" class="btn btn-secondary">8</button>
+        <button type="button" class="btn btn-secondary">9</button>
+        <button type="button" class="btn btn-secondary">10</button>
+      </div>
     </div>
   </div>
 </template>
@@ -73,8 +99,14 @@ export default {
   border: 1px solid #acacac;
   margin: auto;
   width: 900px;
-  height: 650px;
+  height: 430px;
   padding-top: 30px;
+}
+.list-group-item {
+  height: 55px;
+  border-left: none;
+  border-right: none;
+  border-radius: 0px;
 }
 .smallPicture {
   height: 30px;
@@ -89,5 +121,11 @@ export default {
 }
 .breadcrumb {
   background-color: #ffffff;
+}
+.center {
+  width: auto;
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
 }
 </style>
