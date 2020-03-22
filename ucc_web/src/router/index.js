@@ -16,7 +16,7 @@ export default new VueRouter({
     routes: [
         {
             path: '/',
-            name: 'index',
+            name: 'HomePage',
             component: HomePage
         },
         {
