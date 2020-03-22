@@ -1,53 +1,48 @@
 <template>
-  <div class="ContentList mt-4">
-    <nav aria-label="breadcrumb" class="float-right titieList">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item" @click="listPrint='hotList'">
-          <a href="#">熱門</a>
-        </li>
-        <li class="breadcrumb-item" @click="listPrint='newList'">
-          <a href="#">最新</a>
-        </li>
-        <li class="breadcrumb-item" @click="listPrint='followList'">
-          <a href="#">追蹤</a>
-        </li>
-      </ol>
-    </nav>
-    <keep-alive>
-      <component :is="listPrint"></component>
-    </keep-alive>
-    <div class="btn-toolbar mt-3 center" role="toolbar" aria-label="Toolbar with button groups">
-      <div class="btn-group mr-2" role="group" aria-label="First group">
-        <button type="button" class="btn btn-secondary">1</button>
-        <button type="button" class="btn btn-secondary">2</button>
-        <button type="button" class="btn btn-secondary">3</button>
-        <button type="button" class="btn btn-secondary">4</button>
-        <button type="button" class="btn btn-secondary">5</button>
-        <button type="button" class="btn btn-secondary">6</button>
-        <button type="button" class="btn btn-secondary">7</button>
-        <button type="button" class="btn btn-secondary">8</button>
-        <button type="button" class="btn btn-secondary">9</button>
-        <button type="button" class="btn btn-secondary">10</button>
+  <div class="register">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg"></div>
+        <div class="col-lg-6 registerPage">
+          <h4>歡迎註冊UCC帳號</h4>
+          <div class="input-group input-group-sm logInDivPading mt-4 inputBorder">
+            <input
+              type="text"
+              id="userEmail"
+              class="form-control textLetterSpacing"
+              placeholder="輸入您的 E-mail 信箱"
+              aria-describedby="inputGroup-sizing-sm"
+              v-model="userEmail"
+            />
+          </div>
+          <div class="input-group input-group-sm logInDivPading mb-3 mt-4 inputBorder">
+            <input
+              type="password"
+              id="userPassword"
+              class="form-control textLetterSpacing"
+              placeholder="輸入您的密碼"
+              aria-describedby="inputGroup-sizing-sm"
+              v-model="userPassword"
+            />
+          </div>
+          <div class="notice">請使用英文字母及阿拉伯數字和部分特殊符號</div>
+          <div class="registerBtn">
+            <button type="button" class="btn btn-link mt-4">註冊</button>
+          </div>
+        </div>
+        <div class="col-lg"></div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import hotList from "@/components/listGroup/hotList";
-import newList from "@/components/listGroup/newList";
-import followList from "@/components/listGroup/followList";
-
 export default {
-  name: "ContentList",
-  components: {
-    hotList,
-    newList,
-    followList
-  },
+  name: "register",
   data() {
     return {
-      listPrint: "hotList"
+      userEmail: "",
+      userPassword: ""
     };
   }
 };
@@ -55,26 +50,31 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.ContentList {
+h4 {
+  margin-bottom: 50px;
+}
+.registerPage {
   position: relative;
-  border: 1px solid #acacac;
+  height: 460px;
+  box-shadow: 0 0 10px #000000;
+  padding-top: 60px;
+  background-image: url(../assets/signInBackground/login.jpg);
+  background-size: cover;
+}
+.logInDivPading {
+  position: relative;
   margin: auto;
-  width: 900px;
-  height: 430px;
-  padding-top: 30px;
+  width: 350px;
 }
-.titieList {
-  position: absolute;
-  top: -25px;
-  right: 10px;
+.inputBorder {
+  border: 1px #747474 solid;
 }
-.breadcrumb {
-  background-color: #ffffff;
+.notice {
+  position: relative;
+  font-size: 10px;
+  left: 80px;
 }
-.center {
-  width: auto;
-  display: table;
-  margin-left: auto;
-  margin-right: auto;
+.registerBtn {
+  margin-top: 25px;
 }
 </style>
