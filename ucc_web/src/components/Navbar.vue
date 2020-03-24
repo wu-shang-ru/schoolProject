@@ -7,7 +7,7 @@
           <a href="#">menu content</a>
           <a href="#">menu content</a>
         </b-nav-item>
-        <b-nav-item class="icon" onclick="clickfunction()">
+        <b-nav-item class="icon" @click="clickfunction()">
           <font-awesome-icon icon="bars" size="lg" />
         </b-nav-item>
       </b-navbar-nav>

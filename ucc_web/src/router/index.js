@@ -51,10 +51,10 @@ export default new VueRouter({
             component: resolve => require(['@/components/test.vue'], resolve),
         },
 
-        {
-            path: '/*',
-            name: 'page404',
-            component: resolve => require(['@/pages/Page404.vue'], resolve),
-        },
+        // {
+        //     path: '/*',
+        //     name: 'page404',
+        //     component: resolve => require(['@/pages/Page404.vue'], resolve),
+        // },
     ]
 })
