@@ -1,19 +1,16 @@
 <template>
   <div class="LogIn">
-    <router-link to="/HomePage">
-      <button type="button" class="btn btn-primary">其他網站</button>
-    </router-link>
-
+    {{userInfo}}
     <!-- Button trigger modal -->
-    <button
+    <!-- <button
       type="button"
       class="btn btn-primary"
       data-toggle="modal"
       data-target="#Login"
-    >Launch demo modal</button>
+    >Launch demo modal</button>-->
 
     <!-- Modal -->
-    <div class="modal fade" id="Login" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="Login" tabindex="-1" role="dialog" aria-hidden="true" ref="modal">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content logInDiv">
           <div class="modal-body">
@@ -71,16 +68,25 @@
 
 <script>
 import { signin } from "@/api/auth";
-
+import { mapActions, mapGetters } from "vuex";
+import jquery from "jquery";
 export default {
   data() {
     return {
       email: "",
       password: "",
-      token: ""
+      token: {
+        tokenType: "",
+        accessToken: ""
+      }
     };
   },
+
   methods: {
+    closeModal() {
+      jquery("#Login").modal("toggle");
+    },
+
     login() {
       var userInfo = {
         email: this.email,
@@ -89,19 +95,30 @@ export default {
       var jsonData = userInfo;
       signin(jsonData)
         .then(resp => {
-          this.token = `${resp.data.tokenType} ${resp.data.accessToken}`;
+          this.token.tokenType = resp.data.tokenType;
+          this.token.accessToken = resp.data.accessToken;
+          const token = this.token;
+          this.storeToken(token);
+          this.closeModal();
+          this.$router.push("/");
         })
         .catch(err => {
           console.log(err.message);
+          alert("抱歉，您輸入帳密有誤喔!");
         });
-    }
+    },
+
+    ...mapActions({
+      storeToken: "auth/login"
+    })
   },
 
-  watch: {
-    token(newVal) {
-      alert("登入 token : " + newVal);
-    }
+  computed: {
+    ...mapGetters({
+      userInfo: "auth/userInfo"
+    })
   },
+
   name: "LogIn"
 };
 </script>

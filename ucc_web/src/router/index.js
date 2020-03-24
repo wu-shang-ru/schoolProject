@@ -1,53 +1,60 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import TestStore from "@/pages/TestStore"
-import HomePage from "@/pages/HomePage";
-import Login from "@/components/Login";
-import Oauth2Redirect from "@/pages/Oauth2Redirect";
-import UserInfo from "@/components/UserInfo";
-import page404 from "@/pages/page404";
-import test from "@/components/test";
-
 Vue.use(VueRouter);
 
 export default new VueRouter({
     mode: 'history',
     routes: [
         {
-            path: '/',
-            name: 'HomePage',
-            component: HomePage
+            path: '/home',
+            alias: '/index',
+            redirect: '/'
         },
+
         {
-            path: '/login',
-            name: 'login',
-            component: Login
+            path: '/',
+            name: 'home',
+            component: resolve => require(['@/pages/HomePage.vue'], resolve)
         },
+
+        {
+            path: '/register',
+            name: 'register',
+            component: resolve => require(['@/pages/Register.vue'], resolve)
+        },
+
         {
             path: '/oauth2/redirect',
             name: 'oauth2',
-            component: Oauth2Redirect
+            component: resolve => require(['@/pages/Oauth2Redirect.vue'], resolve)
         },
+
         {
-            path: '/UserInfo',
-            name: 'UserInfo',
-            component: UserInfo
+            path: '/login',
+            name: 'login',
+            component: resolve => require(['@/components/Login.vue'], resolve)
         },
+
+        {
+            path: '/user',
+            name: 'user',
+            component: resolve => require(['@/pages/User.vue'], resolve),
+            children: [
+                { path: 'info', component: resolve => require(['@/components/user/Info.vue'], resolve) }
+            ]
+        },
+
         {
             path: '/test',
             name: 'test',
-            component: test
+            component: resolve => require(['@/components/test.vue'], resolve),
         },
-        {
-            path: '/store',
-            name: 'store',
-            component: TestStore
-        },
+
         {
             path: '/*',
             name: 'page404',
-            component: page404
+            component: resolve => require(['@/pages/Page404.vue'], resolve),
         },
     ]
 })
