@@ -16,19 +16,8 @@
     <keep-alive>
       <component :is="listPrint"></component>
     </keep-alive>
-    <div class="btn-toolbar mt-3 center" role="toolbar" aria-label="Toolbar with button groups">
-      <div class="btn-group mr-2" role="group" aria-label="First group">
-        <button type="button" class="btn btn-secondary">1</button>
-        <button type="button" class="btn btn-secondary">2</button>
-        <button type="button" class="btn btn-secondary">3</button>
-        <button type="button" class="btn btn-secondary">4</button>
-        <button type="button" class="btn btn-secondary">5</button>
-        <button type="button" class="btn btn-secondary">6</button>
-        <button type="button" class="btn btn-secondary">7</button>
-        <button type="button" class="btn btn-secondary">8</button>
-        <button type="button" class="btn btn-secondary">9</button>
-        <button type="button" class="btn btn-secondary">10</button>
-      </div>
+    <div class="block mt-3">
+      <el-pagination layout="prev, pager, next" :total="100"></el-pagination>
     </div>
   </div>
 </template>
