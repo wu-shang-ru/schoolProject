@@ -5,6 +5,8 @@ import store from '@/store'
 import 'bootstrap'; // Import js file
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import css file
 import BootstrapVue from 'bootstrap-vue'
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
 
 // 為了加入fontawesome icon 所import -- From Eric
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -15,6 +17,7 @@ Vue.component('font-awesome-icon', FontAwesomeIcon)
 // 結束
 
 Vue.use(BootstrapVue);
+Vue.use(ElementUI);
 
 Vue.config.productionTip = false;
 
