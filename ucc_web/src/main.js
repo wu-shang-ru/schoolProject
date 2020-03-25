@@ -5,6 +5,8 @@ import store from '@/store'
 import 'bootstrap'; // Import js file
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import css file
 import BootstrapVue from 'bootstrap-vue'
+
+//ElementUI
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 
