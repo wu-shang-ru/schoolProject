@@ -6,7 +6,7 @@ import 'bootstrap'; // Import js file
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import css file
 import BootstrapVue from 'bootstrap-vue'
 
-//ElementUI
+// import Element 元素
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 
@@ -17,7 +17,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 library.add(faComment, faUserCircle, faUserFriends, faBars, faSearch)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 // 結束
-
+Vue.use(ElementUI);
 Vue.use(BootstrapVue);
 Vue.use(ElementUI);
 
@@ -28,4 +28,3 @@ new Vue({
   store,
   render: h => h(App),
 }).$mount('#app');
-
