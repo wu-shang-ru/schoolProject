@@ -1,57 +1,47 @@
 <template>
-  <div class="LogIn">
-    {{userInfo}}
-    <!-- Button trigger modal -->
-    <!-- <button
-      type="button"
-      class="btn btn-primary"
-      data-toggle="modal"
-      data-target="#Login"
-    >Launch demo modal</button>-->
-
+  <div>
     <!-- Modal -->
     <div class="modal fade" id="Login" tabindex="-1" role="dialog" aria-hidden="true" ref="modal">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content logInDiv">
           <div class="modal-body">
-            <h4>歡迎回到UCC.</h4>
+            <h4 class="mt-3">歡迎回到UCC.</h4>
             <h5>登入帳號開始享受UCC吧</h5>
-            <div class="input-group input-group-sm logInDivPading mb-3 mt-4 inputBorder">
+            <div class="input-group input-group-sm logInDivPading mb-3 mt-4">
               <input
                 type="text"
+                :class="{inputError : inputIsError}"
                 class="form-control textLetterSpacing"
                 placeholder="輸入您的 E-mail 信箱"
                 aria-describedby="inputGroup-sizing-sm"
                 v-model="email"
               />
             </div>
-            <div class="input-group input-group-sm logInDivPading mb-3 mt-4 inputBorder">
+            <div class="input-group input-group-sm logInDivPading mt-4">
               <input
                 type="password"
+                :class="{inputError : inputIsError}"
                 class="form-control textLetterSpacing"
                 placeholder="輸入您的密碼"
                 aria-describedby="inputGroup-sizing-sm"
                 v-model="password"
               />
             </div>
-            <div class="centerPadding mb-3">
-              <button type="submit" class="btn btn-link" id="dataConfirm" @click="login">登入</button>
-            </div>
-            <h6 class="mb-3">其他登入方式</h6>
+            <div class="alertDiv mb-3">{{alertDiv.alertText}}</div>
+            <el-button type="primary" round :loading="onLoading===isLoading" @click="login">登入</el-button>
+            <h6 class="mb-3 mt-4">其他登入方式</h6>
             <div class="logInWay">
-              <button type="button" class="btn btn-outline-secondary mb-2 btnWidth">
-                <a
-                  href="http://localhost:8080/oauth2/authorize/google?redirect_uri=http://localhost:3000/oauth2/redirect"
-                >Google登入</a>
-              </button>
+              <a
+                href="http://localhost:8080/oauth2/authorize/google?redirect_uri=http://localhost:3000/oauth2/redirect"
+              >
+                <button type="button" class="btn btn-outline-secondary mb-2 btnWidth">Google登入</button>
+              </a>
               <br />
-              <button type="button" class="btn btn-outline-secondary mb-2 btnWidth">
-                <a
-                  href="http://localhost:8080/oauth2/authorize/facebook?redirect_uri=http://localhost:3000/oauth2/redirect"
-                >Facebook登入</a>
-              </button>
-              <br />
-              <button type="button" class="btn btn-outline-secondary btnWidth">E-mail 登入</button>
+              <a
+                href="http://localhost:8080/oauth2/authorize/facebook?redirect_uri=http://localhost:3000/oauth2/redirect"
+              >
+                <button type="button" class="btn btn-outline-secondary mb-3 btnWidth">Facebook登入</button>
+              </a>
             </div>
             <h6 class="mt-3">
               沒有帳號嗎?
@@ -68,17 +58,24 @@
 
 <script>
 import { signin } from "@/api/auth";
-import { mapActions, mapGetters } from "vuex";
+import { mapActions } from "vuex";
 import jquery from "jquery";
 export default {
   data() {
     return {
+      dialogVisible: false,
+      onLoading: "true",
+      isLoading: "false",
       email: "",
       password: "",
       token: {
         tokenType: "",
         accessToken: ""
-      }
+      },
+      alertDiv: {
+        alertText: ""
+      },
+      inputIsError: false
     };
   },
 
@@ -88,6 +85,7 @@ export default {
     },
 
     login() {
+      this.isLoading = "true";
       var userInfo = {
         email: this.email,
         password: this.password
@@ -104,7 +102,14 @@ export default {
         })
         .catch(err => {
           console.log(err.message);
-          alert("抱歉，您輸入帳密有誤喔!");
+          this.isLoading = "false";
+          if ((this.email === "") & (this.password === "")) {
+            this.inputIsError = true;
+            this.alertDiv.alertText = "抱歉，信箱帳號及密碼必須輸入。";
+          } else {
+            this.alertDiv.alertText =
+              "抱歉，您輸入帳密有誤，請重新確認帳號密碼。";
+          }
         });
     },
 
@@ -113,17 +118,10 @@ export default {
     })
   },
 
-  computed: {
-    ...mapGetters({
-      userInfo: "auth/userInfo"
-    })
-  },
-
   name: "LogIn"
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .logInDiv {
   height: 500px;
@@ -136,10 +134,10 @@ export default {
   margin: auto;
   width: 350px;
 }
-
+/* 
 .inputBorder {
   border: 1px #747474 solid;
-}
+} */
 
 .textLetterSpacing {
   letter-spacing: 1px;
@@ -161,5 +159,17 @@ export default {
 
 .btnWidth {
   width: 200px;
+}
+
+.alertDiv {
+  position: relative;
+  font-size: 10px;
+  color: red;
+  font-weight: bold;
+  left: 80px;
+}
+
+.inputError {
+  background-color: #ffc4c4;
 }
 </style>
