@@ -1,69 +1,53 @@
 <template>
-  <div class="ContentList mt-4">
-    <nav aria-label="breadcrumb" class="float-right titieList">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item" @click="listPrint='hotList'">
-          <a href="#">熱門</a>
-        </li>
-        <li class="breadcrumb-item" @click="listPrint='newList'">
-          <a href="#">最新</a>
-        </li>
-        <li class="breadcrumb-item" @click="listPrint='followList'">
-          <a href="#">追蹤</a>
-        </li>
-      </ol>
-    </nav>
-    <keep-alive>
-      <component :is="listPrint"></component>
-    </keep-alive>
-    <div class="block mt-3">
-      <el-pagination layout="prev, pager, next" :total="100"></el-pagination>
-    </div>
+  <div class="banner">
+    <el-carousel indicator-position="outside">
+      <el-carousel-item v-for="item in photoList" :key="item">
+        <img class="picture" :src="item.url" />
+      </el-carousel-item>
+    </el-carousel>
   </div>
 </template>
 
 <script>
-import hotList from "@/components/listGroup/hotList";
-import newList from "@/components/listGroup/newList";
-import followList from "@/components/listGroup/followList";
-
 export default {
-  name: "ContentList",
-  components: {
-    hotList,
-    newList,
-    followList
-  },
+  name: "banner",
   data() {
     return {
-      listPrint: "hotList"
+      photoList: [
+        {
+          url: require("@/assets/banner/1.jpg")
+        },
+        {
+          url: require("@/assets/banner/2.jpg")
+        },
+        {
+          url: require("@/assets/banner/3.jpg")
+        }
+      ]
     };
   }
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-.ContentList {
-  position: relative;
-  border: 1px solid #acacac;
-  margin: auto;
-  width: 900px;
-  height: 430px;
-  padding-top: 30px;
+<style>
+.el-carousel__item h3 {
+  color: #475669;
+  font-size: 18px;
+  opacity: 0.75;
+  line-height: 300px;
+  margin: 0;
 }
-.titieList {
-  position: absolute;
-  top: -25px;
-  right: 10px;
+
+.el-carousel__item:nth-child(2n) {
+  background-color: #99a9bf;
 }
-.breadcrumb {
-  background-color: #ffffff;
+
+.el-carousel__item:nth-child(2n + 1) {
+  background-color: #d3dce6;
 }
-.center {
-  width: auto;
-  display: table;
-  margin-left: auto;
-  margin-right: auto;
+
+.picture {
+  width: 100%;
+  height: 100%;
 }
 </style>
