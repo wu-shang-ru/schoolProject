@@ -1,27 +1,29 @@
 <template>
   <div class="HomePage">
-    <Navbar></Navbar>
-    <Menubar></Menubar>
-    <nav-header></nav-header>
+    <navbar></navbar>
+    <menubar></menubar>
+    <!-- <nav-header></nav-header> -->
+    <banner></banner>
     <ContentList></ContentList>
     <router-link to="/store">到 Store 測試頁</router-link>
   </div>
 </template>
 
 <script>
-import NavHeader from "@/components/NavHeader";
+// import NavHeader from "@/components/NavHeader";
 import ContentList from "@/components/ContentList";
 import Navbar from "@/components/Navbar";
 import Menubar from "@/components/Menubar";
-
+import Banner from "@/components/Banner";
 
 export default {
   name: "HomePage",
   components: {
-    NavHeader,
+    // NavHeader,
     ContentList,
     Navbar,
-    Menubar
+    Menubar,
+    Banner
   }
 };
 </script>
