@@ -1,7 +1,7 @@
 <template>
   <div class="HomePage">
     <navbar></navbar>
-    <menubar></menubar>
+    <Menubar></Menubar>
     <!-- <nav-header></nav-header> -->
     <banner></banner>
     <ContentList></ContentList>
