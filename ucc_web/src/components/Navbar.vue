@@ -1,74 +1,41 @@
 <template>
-  <div class="Navbar">
-    <b-navbar toggleable="lg" type="dark" variant="info">
-      <b-navbar-nav class="nav-menu">
-        <b-nav-item id="bar-links">
-          <a href="#">menu content</a>
-          <a href="#">menu content</a>
-          <a href="#">menu content</a>
-        </b-nav-item>
-        <b-nav-item class="icon" @click="clickfunction()">
-          <font-awesome-icon icon="bars" size="lg" />
-        </b-nav-item>
-      </b-navbar-nav>
+  <div class="Menubar-new">
+    <el-menu
+      :default-active="activeIndex"
+      class="el-menu-demo"
+      mode="horizontal"
+      @select="handleSelect"
+    >
+      <el-menu-item index="1">
+        <h3 style="margin-top:10px">University Clue Center</h3>
+      </el-menu-item>
+      <el-menu-item>
+        <el-input placeholder="请输入想搜尋之文章" v-model="input2">
+          <el-button slot="append" icon="el-icon-search"></el-button>
+        </el-input>
+      </el-menu-item>
 
-      <b-navbar-brand href="#">Student Club for UCC</b-navbar-brand>
+      <div class="rightBtnGroup">
+        <el-menu-item index="4" href="#" class="rightBtn">
+          <i class="el-icon-chat-line-square" size="medium"></i>
+        </el-menu-item>
 
-      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-
-      <b-collapse id="nav-collapse" is-nav>
-        <!-- <b-navbar-nav>
-                <b-nav-item href="#">Link</b-nav-item>
-                <b-nav-item href="#" disabled>Disabled</b-nav-item>
-        </b-navbar-nav>-->
-
-        <!-- Right aligned nav items -->
-        <b-navbar-nav class="ml-auto">
-          <!-- Search Bar -->
-          <b-nav-form>
-            <b-form-input
-              size="sm"
-              class="mr-sm-2"
-              id="search_box"
-              v-model="search"
-              :value="search"
-              @focus="searchOnfocus"
-              @blur="searchOnblur"
-            ></b-form-input>
-            <b-button size="sm" class="my-2 my-sm-0 mr-5" type="submit">
-              <font-awesome-icon icon="search" size="lg" />
-            </b-button>
-          </b-nav-form>
-
-          <!-- Chat Button -->
-          <b-nav-item class="nav-item mr-2" href="#">
-            <font-awesome-icon icon="comment" size="lg" />
-            <span class="nav-font">Chat</span>
-          </b-nav-item>
-          <!-- friend-list DropDown -->
-          <b-nav-item-dropdown right>
-            <template v-slot:button-content>
-              <font-awesome-icon icon="user-friends" size="lg" />
-              <span class="nav-font">Friends</span>
-            </template>
-            <b-dropdown-item href="#">##</b-dropdown-item>
-            <b-dropdown-item href="#">##</b-dropdown-item>
-            <b-dropdown-item href="#">##</b-dropdown-item>
-            <b-dropdown-item href="#">##</b-dropdown-item>
-          </b-nav-item-dropdown>
-
-          <!-- UserLogin Button -->
-          <b-nav-item class="nav-item mr-2" href="#" data-toggle="modal" data-target="#Login">
-            <font-awesome-icon icon="user-circle" size="lg" />
-            <span class="nav-font">Login</span>
-          </b-nav-item>
-        </b-navbar-nav>
-      </b-collapse>
-    </b-navbar>
+        <el-submenu index="5" href="#" class="rightBtn">
+          <template slot="title" class="rightBtn">
+            <font-awesome-icon icon="user-friends" size="lg" style="color:#A9A9A9" />
+          </template>
+          <el-menu-item class="rightBtn" index="5-1" href="#">Friends1</el-menu-item>
+          <el-menu-item class="rightBtn" index="5-2" href="#">Friends2</el-menu-item>
+          <el-menu-item class="rightBtn" index="5-3" href="#">Friends3</el-menu-item>
+        </el-submenu>
+        <el-menu-item index="6" href="#" class="rightBtn" data-toggle="modal" data-target="#Login">
+          <i class="el-icon-user-solid" style="color:#A9A9A9"></i>
+        </el-menu-item>
+      </div>
+    </el-menu>
     <Login></Login>
   </div>
-</template>
-
+</template>  
 <script>
 import Login from "@/components/Login";
 
@@ -77,10 +44,12 @@ import { mapActions, mapGetters } from "vuex";
 import jquery from "jquery";
 
 export default {
-  name: "Navbar",
-
+  name: "Menubar",
   data() {
     return {
+      input: "",
+      activeIndex: "1",
+      activeIndex2: "1",
       email: "",
       password: "",
       token: {
@@ -90,12 +59,14 @@ export default {
       search: "Search"
     };
   },
-
   components: {
     Login
   },
-
   methods: {
+    handleSelect(key, keyPath) {
+      console.log(key, keyPath);
+    },
+
     closeModal() {
       jquery("#Login").modal("toggle");
     },
@@ -154,23 +125,14 @@ export default {
   }
 };
 </script>
+
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.Navbar {
-  position: relative;
-  width: 100%;
+.rightBtnGroup {
+  display: flex;
+  justify-content: flex-end;
 }
-#bar-links {
-  display: none;
-}
-.nav-menu {
-  margin-right: 5px;
-}
-.nav-menu a {
-  display: block;
-}
-.nav-menu a.icon {
-  display: block;
-  color: white;
+.Icon {
+  border: 0px;
 }
 </style>

@@ -33,21 +33,95 @@
         </el-menu-item>
       </div>
     </el-menu>
+    <Login></Login>
   </div>
 </template>  
 <script>
+import Login from "@/components/Login";
+
+import { signin } from "@/api/auth";
+import { mapActions, mapGetters } from "vuex";
+import jquery from "jquery";
+
 export default {
+  name: "Menubar",
   data() {
     return {
       input: "",
       activeIndex: "1",
-      activeIndex2: "1"
+      activeIndex2: "1",
+      email: "",
+      password: "",
+      token: {
+        tokenType: "",
+        accessToken: ""
+      },
+      search: "Search"
     };
+  },
+  components: {
+    Login
   },
   methods: {
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
+    },
+
+    closeModal() {
+      jquery("#Login").modal("toggle");
+    },
+
+    login() {
+      var userInfo = {
+        email: this.email,
+        password: this.password
+      };
+      var jsonData = userInfo;
+      signin(jsonData)
+        .then(resp => {
+          this.token.tokenType = resp.data.tokenType;
+          this.token.accessToken = resp.data.accessToken;
+          const token = this.token;
+          this.storeToken(token);
+          this.closeModal();
+          this.$router.push("/");
+        })
+        .catch(err => {
+          console.log(err.message);
+          alert("抱歉，您輸入帳密有誤喔!");
+        });
+    },
+
+    ...mapActions({
+      storeToken: "auth/login"
+    }),
+
+    clickfunction() {
+      var x = document.getElementById("bar-links");
+      if (x.style.display == "none") {
+        x.style.display = "block";
+      } else {
+        x.style.display = "none";
+      }
+    },
+
+    // search的使用者友善
+    searchOnfocus() {
+      if (this.search === "Search") {
+        this.search = "";
+      }
+    },
+
+    searchOnblur() {
+      if (this.search === "") {
+        this.search = "Search";
+      }
     }
+  },
+  computed: {
+    ...mapGetters({
+      userInfo: "auth/userInfo"
+    })
   }
 };
 </script>
