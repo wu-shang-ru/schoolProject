@@ -1,8 +1,12 @@
 <template>
   <div class="Menubar">
     <el-radio-group v-model="isCollapse" style="margin-bottom: 20px;margin-top:20px;">
-      <el-radio-button :label="false" v-show="isOpen" @click="openClose">展开</el-radio-button>
-      <el-radio-button :label="true" v-show="!isOpen" @click="openClose">收起</el-radio-button>
+      <div @click="openClose">
+        <el-radio-button :label="false" v-if="isOpen">展开</el-radio-button>
+      </div>
+      <div @click="openClose">
+        <el-radio-button :label="true" v-if="!isOpen">收起</el-radio-button>
+      </div>
     </el-radio-group>
     <el-menu
       default-active="1"
@@ -75,6 +79,7 @@ export default {
       console.log(key, keyPath);
     },
     openClose() {
+      // this.$emit("click".fn);
       this.isOpen = !this.isOpen;
     }
   }

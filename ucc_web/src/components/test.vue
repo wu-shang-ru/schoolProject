@@ -1,53 +1,102 @@
 <template>
-  <div class="banner">
-    <el-carousel indicator-position="outside">
-      <el-carousel-item v-for="item in photoList" :key="item">
-        <img class="picture" :src="item.url" />
-      </el-carousel-item>
-    </el-carousel>
+  <div class="Menubar">
+    <div @click="openClose" style="margin-bottom: 20px;margin-top:20px;">
+      <el-radio-button v-model="isCollapse" :label="isOpen">{{tips}}</el-radio-button>
+    </div>
+    <el-menu
+      default-active="1"
+      class="el-menu-vertical-demo"
+      @open="handleOpen"
+      @close="handleClose"
+      :collapse="isCollapse"
+    >
+      <el-menu-item index="1">
+        <a href="https://google.com">
+          <img
+            class="menuIcon"
+            src="http://ntcbadm1.ntub.edu.tw/Inc/ShowIndexStdImg.ashx?dataPic=10646029"
+            width="35px"
+            height="35px"
+          />
+        </a>
+        <span slot="title">社團名稱</span>
+      </el-menu-item>
+      <el-menu-item index="2">
+        <a href="https://google.com">
+          <img
+            class="menuIcon"
+            src="http://ntcbadm1.ntub.edu.tw/Inc/ShowIndexStdImg.ashx?dataPic=10646027"
+            width="35px"
+            height="35px"
+          />
+        </a>
+        <span slot="title">社團名稱</span>
+      </el-menu-item>
+      <el-menu-item index="3">
+        <a href="https://google.com">
+          <img
+            class="menuIcon"
+            src="http://ntcbadm1.ntub.edu.tw/Inc/ShowIndexStdImg.ashx?dataPic=10646029"
+            width="35px"
+            height="35px"
+          />
+        </a>
+        <span slot="title">社團名稱</span>
+      </el-menu-item>
+      <el-menu-item index="4">
+        <a href="https://google.com">
+          <img
+            class="menuIcon"
+            src="http://ntcbadm1.ntub.edu.tw/Inc/ShowIndexStdImg.ashx?dataPic=10646029"
+            width="35px"
+            height="35px"
+          />
+        </a>
+        <span slot="title">社團名稱</span>
+      </el-menu-item>
+    </el-menu>
   </div>
 </template>
 
 <script>
 export default {
-  name: "banner",
   data() {
     return {
-      photoList: [
-        {
-          url: require("@/assets/banner/1.jpg")
-        },
-        {
-          url: require("@/assets/banner/2.jpg")
-        },
-        {
-          url: require("@/assets/banner/3.jpg")
-        }
-      ]
+      isCollapse: true,
+      isOpen: false,
+      tips: "＞"
     };
+  },
+  methods: {
+    handleOpen(key, keyPath) {
+      console.log(key, keyPath);
+    },
+    handleClose(key, keyPath) {
+      console.log(key, keyPath);
+    },
+    openClose() {
+      this.isOpen = !this.isOpen;
+      var tips;
+      if (tips === "＞") {
+        tips = "＜";
+      } else {
+        tips = "＞";
+      }
+    }
   }
 };
 </script>
 
-<style>
-.el-carousel__item h3 {
-  color: #475669;
-  font-size: 18px;
-  opacity: 0.75;
-  line-height: 300px;
-  margin: 0;
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+.el-menu-vertical-demo:not(.el-menu--collapse) {
+  width: 200px;
+  min-height: 400px;
 }
-
-.el-carousel__item:nth-child(2n) {
-  background-color: #99a9bf;
+.Menubar {
+  position: absolute;
 }
-
-.el-carousel__item:nth-child(2n + 1) {
-  background-color: #d3dce6;
-}
-
-.picture {
-  width: 100%;
-  height: 100%;
+.menuIcon {
+  border-radius: 50%;
 }
 </style>
