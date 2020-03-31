@@ -7,10 +7,10 @@
       @select="handleSelect"
     >
       <el-menu-item index="1">
-        <h3 style="margin-top:10px">University Clue Center</h3>
+        <h3 style="margin-top:10px">University Club Center</h3>
       </el-menu-item>
       <el-menu-item>
-        <el-input placeholder="请输入想搜尋之文章" v-model="input2">
+        <el-input v-model="search" @focus="searchOnfocus" @blur="searchOnblur">
           <el-button slot="append" icon="el-icon-search"></el-button>
         </el-input>
       </el-menu-item>
@@ -56,7 +56,7 @@ export default {
         tokenType: "",
         accessToken: ""
       },
-      search: "Search"
+      search: "搜尋社團/活動"
     };
   },
   components: {
@@ -107,14 +107,14 @@ export default {
 
     // search的使用者友善
     searchOnfocus() {
-      if (this.search === "Search") {
+      if (this.search === "搜尋社團/活動") {
         this.search = "";
       }
     },
 
     searchOnblur() {
       if (this.search === "") {
-        this.search = "Search";
+        this.search = "搜尋社團/活動";
       }
     }
   },
