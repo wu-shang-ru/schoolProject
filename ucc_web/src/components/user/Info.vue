@@ -2,7 +2,9 @@
   <div class="UserInfo">
     <h1>UserInfo</h1>
     <h3>user profile img:</h3>
-    <p><img :src="userInfo.imgUrl"></p>
+    <p>
+      <img :src="userInfo.imgUrl" />
+    </p>
     <h3>user name:</h3>
     <p>{{ userInfo.userName }}</p>
     <h3>ID:</h3>
@@ -15,20 +17,18 @@
 </template>
 
 <script>
-  import {mapGetters} from 'vuex'
+import { mapGetters } from "vuex";
 export default {
   name: "Info",
   data() {
-    return {
-    };
+    return {};
   },
 
   computed: {
     ...mapGetters({
-      userInfo: 'user/userInfo',
+      userInfo: "user/userInfo"
     })
-  },
-
+  }
 };
 </script>
 
