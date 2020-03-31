@@ -1,53 +1,80 @@
 <template>
-  <div class="banner">
-    <el-carousel indicator-position="outside">
-      <el-carousel-item v-for="item in photoList" :key="item">
-        <img class="picture" :src="item.url" />
-      </el-carousel-item>
-    </el-carousel>
-  </div>
-</template>
+  <div class="Menubar-new">
+    <el-menu
+      :default-active="activeIndex"
+      class="el-menu-demo"
+      mode="horizontal"
+      @select="handleSelect"
+    >
+      <el-menu-item index="1">
+        <h3 style="margin-top:10px">University Clue Center</h3>
+      </el-menu-item>
+      <el-menu-item>
+        <el-input placeholder="請輸入內容" v-model="search">
+          <el-button slot="append" icon="el-icon-search"></el-button>
+        </el-input>
+      </el-menu-item>
 
+      <div class="rightBtnGroup">
+        <el-menu-item index="4" href="#" class="rightBtn">
+          <i class="el-icon-chat-line-square" size="medium"></i>
+        </el-menu-item>
+
+        <el-submenu index="5" href="#" class="rightBtn">
+          <template slot="title" class="rightBtn">
+            <font-awesome-icon icon="user-friends" size="lg" style="color:#A9A9A9" />
+          </template>
+          <el-menu-item class="rightBtn" index="5-1" href="#">选项1</el-menu-item>
+          <el-menu-item class="rightBtn" index="5-2" href="#">选项2</el-menu-item>
+          <el-menu-item class="rightBtn" index="5-3" href="#">选项3</el-menu-item>
+        </el-submenu>
+        <el-menu-item index="6" href="#" class="rightBtn" data-toggle="modal" data-target="#Login">
+          <i class="el-icon-user-solid" style="color:#A9A9A9"></i>
+        </el-menu-item>
+      </div>
+    </el-menu>
+    <Login></Login>
+  </div>
+</template>  
 <script>
+import Login from "@/components/Login";
+
 export default {
-  name: "banner",
+  name: "Navbar",
+
   data() {
     return {
-      photoList: [
-        {
-          url: require("@/assets/banner/1.jpg")
-        },
-        {
-          url: require("@/assets/banner/2.jpg")
-        },
-        {
-          url: require("@/assets/banner/3.jpg")
-        }
-      ]
+      email: "",
+      password: "",
+      token: {
+        tokenType: "",
+        accessToken: ""
+      },
+      search: "",
+      activeIndex: "1",
+      activeIndex2: "1"
     };
+  },
+
+  components: {
+    Login
+  },
+
+  methods: {
+    handleSelect(key, keyPath) {
+      console.log(key, keyPath);
+    }
   }
 };
 </script>
 
-<style>
-.el-carousel__item h3 {
-  color: #475669;
-  font-size: 18px;
-  opacity: 0.75;
-  line-height: 300px;
-  margin: 0;
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+.rightBtnGroup {
+  display: flex;
+  justify-content: flex-end;
 }
-
-.el-carousel__item:nth-child(2n) {
-  background-color: #99a9bf;
-}
-
-.el-carousel__item:nth-child(2n + 1) {
-  background-color: #d3dce6;
-}
-
-.picture {
-  width: 100%;
-  height: 100%;
+.Icon {
+  border: 0px;
 }
 </style>
