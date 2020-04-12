@@ -1,5 +1,6 @@
 <template>
   <div class="Menubar-new">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <el-menu
       :default-active="activeIndex"
       class="el-menu-demo"
@@ -7,10 +8,13 @@
       @select="handleSelect"
     >
       <el-menu-item index="1">
-        <h3 style="margin-top:10px">University Club Center</h3>
+        <img class="logo" src="../../member/Eric/img/UCC Classic.jpg" />
+        <span id="fl">
+          <h3>University Club Center</h3>
+        </span>
       </el-menu-item>
       <el-menu-item>
-        <el-input v-model="search" @focus="searchOnfocus" @blur="searchOnblur">
+        <el-input v-model="search" @focus="searchOnfocus" @blur="searchOnblur" clearable>
           <el-button slot="append" icon="el-icon-search"></el-button>
         </el-input>
       </el-menu-item>
@@ -134,5 +138,19 @@ export default {
 }
 .Icon {
   border: 0px;
+}
+.logo {
+  height: 40px;
+  width: 70px;
+  margin: 0 13px 5px 0;
+}
+#fl {
+  margin-top: 10px;
+  float: right;
+}
+@media screen and (max-width: 895px) {
+  .rightBtnGroup {
+    width: 100%;
+  }
 }
 </style>
