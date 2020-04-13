@@ -47,6 +47,13 @@ export default new VueRouter({
         },
 
         {
+            path: '/chat',
+            name: 'chat',
+            component: resolve => require(['@/pages/Chat.vue'], resolve),
+        },
+
+        //必須置底
+        {
             path: '/*',
             name: 'page404',
             component: resolve => require(['@/pages/Page404.vue'], resolve),

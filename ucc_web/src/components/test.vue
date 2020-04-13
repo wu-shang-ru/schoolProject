@@ -1,133 +1,148 @@
-<<<<<<< HEAD
-=======
 <template>
-  <div>
-    <button
-      type="button"
-      class="btn btn-primary"
-      data-toggle="modal"
-      data-target="#register"
-    >Launch demo modal</button>
-    <!-- Modal -->
-    <div
-      class="modal fade"
-      id="register"
-      tabindex="-1"
-      role="dialog"
-      aria-hidden="true"
-      ref="modal"
+  <div class="Menubar-new">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <el-menu
+      :default-active="activeIndex"
+      class="el-menu-demo"
+      mode="horizontal"
+      @select="handleSelect"
     >
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content registerDiv">
-          <div class="modal-body">
-            <h4>歡迎註冊UCC帳號</h4>
-            <div class="input-group input-group-sm registerDivPading mt-4 inputBorder">
-              <input
-                type="text"
-                id="userName"
-                class="form-control textLetterSpacing"
-                placeholder="輸入您的稱謂"
-                aria-describedby="inputGroup-sizing-sm"
-                v-model="userName"
-              />
-            </div>
-            <div class="input-group input-group-sm registerDivPading mt-4 inputBorder">
-              <input
-                type="text"
-                id="userEmail"
-                class="form-control textLetterSpacing"
-                placeholder="輸入您的 E-mail 信箱"
-                aria-describedby="inputGroup-sizing-sm"
-                v-model="userEmail"
-              />
-            </div>
-            <div class="input-group input-group-sm registerDivPading mb-3 mt-5 inputBorder">
-              <input
-                type="password"
-                id="userPassword"
-                class="form-control textLetterSpacing"
-                placeholder="輸入您欲設定的密碼"
-                aria-describedby="inputGroup-sizing-sm"
-                v-model="userPassword"
-              />
-            </div>
-            <div class="input-group input-group-sm registerDivPading mb-3 mt-4 inputBorder">
-              <input
-                type="password"
-                id="reUserPassword"
-                class="form-control textLetterSpacing"
-                placeholder="請重複輸入您設定的密碼"
-                aria-describedby="inputGroup-sizing-sm"
-                v-model="reUserPassword"
-              />
-            </div>
-            <div class="notice">請使用英文字母及阿拉伯數字和部分特殊符號</div>
-            <div class="registerBtn">
-              <el-button type="primary" round :loading="isClick===true" @click="register">註冊</el-button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
+      <el-menu-item index="1">
+        <img class="logo" src="../../member/Eric/img/UCC Classic.jpg" />
+        <span id="fl">
+          <h3>University Club Center</h3>
+        </span>
+      </el-menu-item>
+      <el-menu-item>
+        <el-input v-model="search" @focus="searchOnfocus" @blur="searchOnblur" clearable>
+          <el-button slot="append" icon="el-icon-search"></el-button>
+        </el-input>
+      </el-menu-item>
 
+      <div class="rightBtnGroup">
+        <el-menu-item index="4" href="#" class="rightBtn">
+          <i class="el-icon-chat-line-square" size="medium"></i>
+        </el-menu-item>
+
+        <el-submenu index="5" href="#" class="rightBtn">
+          <template slot="title" class="rightBtn">
+            <font-awesome-icon icon="user-friends" size="lg" style="color:#A9A9A9" />
+          </template>
+          <el-menu-item class="rightBtn" index="5-1" href="#">Friends1</el-menu-item>
+          <el-menu-item class="rightBtn" index="5-2" href="#">Friends2</el-menu-item>
+          <el-menu-item class="rightBtn" index="5-3" href="#">Friends3</el-menu-item>
+        </el-submenu>
+        <el-menu-item index="6" href="#" class="rightBtn" data-toggle="modal" data-target="#Login">
+          <i class="el-icon-user-solid" style="color:#A9A9A9"></i>
+        </el-menu-item>
+      </div>
+    </el-menu>
+    <Login></Login>
+  </div>
+</template>  
 <script>
+import Login from "@/components/Login";
+import { signin } from "@/api/auth";
+import { mapActions, mapGetters } from "vuex";
+import jquery from "jquery";
 export default {
+  name: "Menubar",
   data() {
     return {
-      userName: "",
-      userEmail: "",
-      userPassword: "",
-      reUserPassword: "",
-      isClick: false
+      input: "",
+      activeIndex: "1",
+      activeIndex2: "1",
+      email: "",
+      password: "",
+      token: {
+        tokenType: "",
+        accessToken: ""
+      },
+      search: "搜尋社團/活動"
     };
   },
-
+  components: {
+    Login
+  },
   methods: {
-    register() {
-      this.isClick = true;
+    handleSelect(key, keyPath) {
+      console.log(key, keyPath);
+    },
+    closeModal() {
+      jquery("#Login").modal("toggle");
+    },
+    login() {
+      var userInfo = {
+        email: this.email,
+        password: this.password
+      };
+      var jsonData = userInfo;
+      signin(jsonData)
+        .then(resp => {
+          this.token.tokenType = resp.data.tokenType;
+          this.token.accessToken = resp.data.accessToken;
+          const token = this.token;
+          this.storeToken(token);
+          this.closeModal();
+          this.$router.push("/");
+        })
+        .catch(err => {
+          console.log(err.message);
+          alert("抱歉，您輸入帳密有誤喔!");
+        });
+    },
+    ...mapActions({
+      storeToken: "auth/login"
+    }),
+    clickfunction() {
+      var x = document.getElementById("bar-links");
+      if (x.style.display == "none") {
+        x.style.display = "block";
+      } else {
+        x.style.display = "none";
+      }
+    },
+    // search的使用者友善
+    searchOnfocus() {
+      if (this.search === "搜尋社團/活動") {
+        this.search = "";
+      }
+    },
+    searchOnblur() {
+      if (this.search === "") {
+        this.search = "搜尋社團/活動";
+      }
     }
   },
-
-  name: "register"
+  computed: {
+    ...mapGetters({
+      userInfo: "auth/userInfo"
+    })
+  }
 };
 </script>
 
+<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.registerDiv {
-  height: 500px;
-  background-image: url(../assets/signInBackground/login.jpg);
-  background-size: cover;
+.rightBtnGroup {
+  display: flex;
+  justify-content: flex-end;
 }
-
-.registerDivPading {
-  position: relative;
-  margin: auto;
-  width: 350px;
+.Icon {
+  border: 0px;
 }
-
-.textLetterSpacing {
-  letter-spacing: 1px;
+.logo {
+  height: 40px;
+  width: 70px;
+  margin: 0 13px 5px 0;
 }
-
-h4 {
-  margin-top: 30px;
-  margin-bottom: 50px;
+#fl {
+  margin-top: 10px;
+  float: right;
 }
-
-.inputBorder {
-  border: 1px #747474 solid;
-}
-
-.notice {
-  position: relative;
-  font-size: 10px;
-  left: 80px;
-}
-
-.registerBtn {
-  margin-top: 25px;
+@media screen and (max-width: 895px) {
+  .rightBtnGroup {
+    width: 100%;
+  }
 }
 </style>
->>>>>>> 6dff7ba4bf2a35790f834ac3b776e777c7b57e1f
