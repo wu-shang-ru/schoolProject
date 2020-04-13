@@ -19,12 +19,6 @@ export default new VueRouter({
         },
 
         {
-            path: '/register',
-            name: 'register',
-            component: resolve => require(['@/pages/Register.vue'], resolve)
-        },
-
-        {
             path: '/oauth2/redirect',
             name: 'oauth2',
             component: resolve => require(['@/pages/Oauth2Redirect.vue'], resolve)
@@ -39,6 +33,7 @@ export default new VueRouter({
         {
             path: '/user',
             name: 'user',
+            redirect: '/',
             component: resolve => require(['@/pages/User.vue'], resolve),
             children: [
                 { path: 'info', component: resolve => require(['@/components/user/Info.vue'], resolve) }
@@ -51,10 +46,10 @@ export default new VueRouter({
             component: resolve => require(['@/components/test.vue'], resolve),
         },
 
-        // {
-        //     path: '/*',
-        //     name: 'page404',
-        //     component: resolve => require(['@/pages/Page404.vue'], resolve),
-        // },
+        {
+            path: '/*',
+            name: 'page404',
+            component: resolve => require(['@/pages/Page404.vue'], resolve),
+        },
     ]
 })

@@ -1,4 +1,4 @@
-import {postRequest} from '../../utils/uccSender'
+import {postRequest} from '../../utils/UccSender'
 
 export async function signin(userInfo) {
     return postRequest('/auth/login', userInfo)
