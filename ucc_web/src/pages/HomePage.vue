@@ -15,8 +15,6 @@ import ContentList from "@/components/ContentList";
 import Navbar from "@/components/Navbar";
 import Menubar from "@/components/Menubar";
 import Banner from "@/components/Banner";
-import Login from "@/components/Login";
-import register from "@/components/Register";
 
 export default {
   name: "HomePage",
@@ -24,9 +22,7 @@ export default {
     ContentList,
     Navbar,
     Menubar,
-    Banner,
-    Login,
-    register
+    Banner
   }
 };
 </script>
