@@ -46,7 +46,7 @@
             <h6 class="mt-3">
               沒有帳號嗎?
               <span>
-                <a href="#">註冊</a>
+                <a href="#" data-toggle="modal" data-target="#register">註冊</a>
               </span>
             </h6>
           </div>
@@ -60,6 +60,7 @@
 import { signin } from "@/api/auth";
 import { mapActions } from "vuex";
 import jquery from "jquery";
+
 export default {
   data() {
     return {
@@ -134,10 +135,6 @@ export default {
   margin: auto;
   width: 350px;
 }
-/* 
-.inputBorder {
-  border: 1px #747474 solid;
-} */
 
 .textLetterSpacing {
   letter-spacing: 1px;

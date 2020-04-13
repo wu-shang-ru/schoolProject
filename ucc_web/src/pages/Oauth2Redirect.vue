@@ -21,10 +21,16 @@
         },
 
         mounted() {
-            const tokenType = this.$route.query.tokenType;
-            const accessToken = this.$route.query.accessToken;
-            this.login({tokenType, accessToken});
-            this.timer = setTimeout(this.redirectToHome, 1000);
+            const errorMsg = this.$route.query.error;
+            if (errorMsg != null){
+                alert(errorMsg);
+                this.$router.push("/");
+            }else{
+                const tokenType = this.$route.query.tokenType;
+                const accessToken = this.$route.query.accessToken;
+                this.login({tokenType, accessToken});
+                this.timer = setTimeout(this.redirectToHome, 1000);
+            }
         },
 
         beforeDestroy() {

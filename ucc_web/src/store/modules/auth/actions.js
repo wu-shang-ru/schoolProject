@@ -1,17 +1,17 @@
-import * as types from './mutation-types'
+import {setAuthorization, cleanAuthStore} from '@/utils/AuthStore'
 
-const increment = function ({commit}) {
-    commit(types.INCREMENT)
+const login = async function ({dispatch}, {tokenType, accessToken}) {
+    setAuthorization({tokenType, accessToken});
+    await dispatch('user/setUserInfo', null, { root: true });
 };
 
-const add = function ({commit}, value) {
-    console.log(value)
-    commit(types.ADD, value)
+const logout = async function () {
+    cleanAuthStore()
 };
 
 const actions = {
-    increment,
-    add,
+    login,
+    logout
 };
 
 export default actions

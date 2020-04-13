@@ -1,46 +1,41 @@
 <template>
-    <div>
-
-        <!--未來可以把 NavHeader 放在這邊-->
-
-        <button @click="$router.push('/user/info')">個人資料</button>
-        <br>
-        <br>
-        <button>網站設定</button>
-        <br>
-        <br>
-        <button>etc..</button>
-        <br>
-        <br>
-        <button @click.prevent="logout">登出</button>
-        <br>
-        <br>
-        <router-view/>
-    </div>
+  <div class="user">
+    <Navbar></Navbar>
+    <menubar></menubar>
+    <router-view />
+  </div>
 </template>
 
 <script>
-    import {mapActions} from "vuex";
+import { authenticated } from "@/utils/AuthStore";
+import Navbar from "@/components/Navbar";
+import Menubar from "@/components/Menubar";
 
-    export default {
-        name: "User",
+export default {
+  name: "User",
 
-        methods: {
-            ...mapActions({
-                logout: 'auth/logout'
-            })
-        },
+  data() {
+    return {};
+  },
 
-        beforeRouteEnter (to, from, next) {
-            if (localStorage.getItem("isLogin")){
-                next()
-            }else{
-                next('/')
-            }
-        }
+  components: {
+    Navbar,
+    Menubar
+  },
+
+  beforeRouteEnter(to, from, next) {
+    if (authenticated()) {
+      next();
+    } else {
+      next("/");
     }
+  }
+};
 </script>
 
 <style scoped>
-
+.user {
+  background-color: #eeeeee;
+  height: 100vh;
+}
 </style>

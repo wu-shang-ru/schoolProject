@@ -1,14 +1,5 @@
-<<<<<<< HEAD
-=======
 <template>
-  <div>
-    <button
-      type="button"
-      class="btn btn-primary"
-      data-toggle="modal"
-      data-target="#register"
-    >Launch demo modal</button>
-    <!-- Modal -->
+  <div class="register">
     <div
       class="modal fade"
       id="register"
@@ -74,6 +65,8 @@
 
 <script>
 export default {
+  name: "register",
+
   data() {
     return {
       userName: "",
@@ -88,12 +81,11 @@ export default {
     register() {
       this.isClick = true;
     }
-  },
-
-  name: "register"
+  }
 };
 </script>
 
+<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .registerDiv {
   height: 500px;
@@ -107,27 +99,29 @@ export default {
   width: 350px;
 }
 
-.textLetterSpacing {
-  letter-spacing: 1px;
-}
-
 h4 {
   margin-top: 30px;
   margin-bottom: 50px;
 }
 
+.registerPage {
+  position: relative;
+  height: 460px;
+  box-shadow: 0 0 10px #000000;
+  padding-top: 60px;
+  background-image: url(../assets/signInBackground/login.jpg);
+  background-size: cover;
+}
+
 .inputBorder {
   border: 1px #747474 solid;
 }
-
 .notice {
   position: relative;
   font-size: 10px;
   left: 80px;
 }
-
 .registerBtn {
   margin-top: 25px;
 }
 </style>
->>>>>>> 6dff7ba4bf2a35790f834ac3b776e777c7b57e1f

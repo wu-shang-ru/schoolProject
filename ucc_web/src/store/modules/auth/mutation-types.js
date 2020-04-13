@@ -1,2 +1,1 @@
-export const INCREMENT = 'increment';
-export const ADD = 'add';
+export const SET_IS_LOGIN = 'setIsLogin';

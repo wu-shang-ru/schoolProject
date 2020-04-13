@@ -1,7 +1,7 @@
 <template>
   <div class="banner">
     <el-carousel indicator-position="outside">
-      <el-carousel-item v-for="item in photoList" :key="item">
+      <el-carousel-item v-for="(item, index) in photoList" :key="index">
         <img class="picture" :src="item.url" />
       </el-carousel-item>
     </el-carousel>
