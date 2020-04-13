@@ -52,6 +52,7 @@
                 v-model="reUserPassword"
               />
             </div>
+            <div class="alertDiv mb-3">{{alertText}}</div>
             <div class="notice">請使用英文字母及阿拉伯數字和部分特殊符號</div>
             <div class="registerBtn">
               <el-button type="primary" round :loading="isClick===true" @click="register">註冊</el-button>
@@ -64,6 +65,7 @@
 </template>
 
 <script>
+import { signup } from "@/api/auth";
 export default {
   name: "register",
 
@@ -73,13 +75,43 @@ export default {
       userEmail: "",
       userPassword: "",
       reUserPassword: "",
-      isClick: false
+      isClick: false,
+      alertText: ""
     };
   },
 
   methods: {
-    register() {
+    signup,
+
+    correctPassword() {
       this.isClick = true;
+      let userInfo = {
+        name: this.userName,
+        email: this.userEmail,
+        password: this.userPassword
+      };
+      this.signup(userInfo)
+        .then(resp => {
+          alert("註冊成功!");
+          console.log(resp.data);
+          location.reload();
+        })
+        .catch(err => {
+          console.log(err);
+        });
+      this.isClick = false;
+    },
+
+    errPassword() {
+      this.alertText = "密碼不一致，請再次確認。";
+    },
+
+    register() {
+      if (this.userPassword === this.reUserPassword) {
+        this.correctPassword();
+      } else {
+        this.errPassword();
+      }
     }
   }
 };
@@ -116,12 +148,22 @@ h4 {
 .inputBorder {
   border: 1px #747474 solid;
 }
+
 .notice {
   position: relative;
   font-size: 10px;
   left: 80px;
 }
+
 .registerBtn {
   margin-top: 25px;
+}
+
+.alertDiv {
+  position: relative;
+  font-size: 10px;
+  color: red;
+  font-weight: bold;
+  left: 80px;
 }
 </style>
