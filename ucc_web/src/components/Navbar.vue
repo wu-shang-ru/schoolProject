@@ -1,5 +1,6 @@
 <template>
   <div class="Menubar-new">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <el-menu
       :default-active="activeIndex"
       class="el-menu-demo"
@@ -8,19 +9,24 @@
     >
       <el-menu-item index="1">
         <router-link to="/">
-          <h3 style="margin-top:10px">University Clue Center</h3>
+          <img class="logo" src="../../member/Eric/img/UCC Classic.jpg" />
+          <span id="fl">
+            <h3>University Club Center</h3>
+          </span>
         </router-link>
       </el-menu-item>
       <el-menu-item>
-        <el-input placeholder="請輸入內容" v-model="search">
+        <el-input v-model="search" @focus="searchOnfocus" @blur="searchOnblur" clearable>
           <el-button slot="append" icon="el-icon-search"></el-button>
         </el-input>
       </el-menu-item>
 
       <div class="rightBtnGroup">
-        <el-menu-item index="4" href="#" class="rightBtn">
-          <i class="el-icon-chat-line-square" size="medium"></i>
-        </el-menu-item>
+        <router-link to="/chat">
+          <el-menu-item index="4" class="rightBtn">
+            <i class="el-icon-chat-line-square" size="medium"></i>
+          </el-menu-item>
+        </router-link>
 
         <el-submenu index="5" href="#" class="rightBtn">
           <template slot="title" class="rightBtn">
@@ -69,11 +75,11 @@ export default {
     return {
       email: "",
       password: "",
+      search: "搜尋社團/活動",
       token: {
         tokenType: "",
         accessToken: ""
       },
-      search: "",
       activeIndex: "1",
       activeIndex2: "1",
       loginState: ""
@@ -88,6 +94,18 @@ export default {
     ...mapActions({
       logout: "auth/logout"
     })
+  },
+
+  // search的使用者友善
+  searchOnfocus() {
+    if (this.search === "搜尋社團/活動") {
+      this.search = "";
+    }
+  },
+  searchOnblur() {
+    if (this.search === "") {
+      this.search = "搜尋社團/活動";
+    }
   },
 
   mounted() {
@@ -108,5 +126,19 @@ export default {
 }
 .Icon {
   border: 0px;
+}
+.logo {
+  height: 40px;
+  width: 70px;
+  margin: 0 13px 5px 0;
+}
+#fl {
+  margin-top: 10px;
+  float: right;
+}
+@media screen and (max-width: 895px) {
+  .rightBtnGroup {
+    width: 100%;
+  }
 }
 </style>
