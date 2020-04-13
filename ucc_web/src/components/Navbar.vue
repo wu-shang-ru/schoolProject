@@ -32,9 +32,8 @@
           <template slot="title" class="rightBtn">
             <font-awesome-icon icon="user-friends" size="lg" style="color:#A9A9A9" />
           </template>
-          <el-menu-item class="rightBtn" index="5-1" href="#">選項1</el-menu-item>
-          <el-menu-item class="rightBtn" index="5-2" href="#">選項2</el-menu-item>
-          <el-menu-item class="rightBtn" index="5-3" href="#">選項3</el-menu-item>
+          <el-menu-item class="rightBtn" index="5-1" href="#">追蹤者</el-menu-item>
+          <el-menu-item class="rightBtn" index="5-2" href="#">追蹤中的社團</el-menu-item>
         </el-submenu>
 
         <!-- 登入狀態改變時會有不同的項目出現 -->
@@ -62,11 +61,15 @@
         </el-submenu>
       </div>
     </el-menu>
+    <Login></Login>
+    <register></register>
   </div>
 </template>  
 <script>
 import { mapActions } from "vuex";
 import { authenticated } from "@/utils/AuthStore";
+import Login from "@/components/Login";
+import register from "@/components/Register";
 
 export default {
   name: "Navbar",
@@ -84,6 +87,11 @@ export default {
       activeIndex2: "1",
       loginState: ""
     };
+  },
+
+  components: {
+    Login,
+    register
   },
 
   methods: {
