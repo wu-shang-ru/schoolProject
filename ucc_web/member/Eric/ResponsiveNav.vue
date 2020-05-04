@@ -11,7 +11,7 @@
       <el-menu-item index="1">
         <img class="logo" src="../../member/Eric/img/UCC Classic.jpg" />
         <span id="fl">
-          <h3>University Club Center</h3>
+          <h3 id="uccFont">University Club Center</h3>
         </span>
       </el-menu-item>
       <el-menu-item>
