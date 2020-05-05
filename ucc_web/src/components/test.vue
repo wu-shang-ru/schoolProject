@@ -9,110 +9,106 @@
     >
       <input type="checkbox" id="check" />
       <el-menu-item index="1">
-        <img class="logo" src="../../member/Eric/img/UCC Classic.jpg" />
-        <span id="fl">
-          <h3>University Club Center</h3>
-        </span>
+        <router-link to="/">
+          <img class="logo" src="../../member/Eric/img/UCC Classic.jpg" />
+          <span id="fl">
+            <h3>University Club Center</h3>
+          </span>
+        </router-link>
       </el-menu-item>
-      <el-menu-item>
+      <el-menu-item id="inputArea">
         <el-input v-model="search" @focus="searchOnfocus" @blur="searchOnblur" clearable>
           <el-button slot="append" icon="el-icon-search"></el-button>
         </el-input>
       </el-menu-item>
 
       <div class="rightBtnGroup">
-        <el-menu-item index="4" href="#" class="rightBtn">
-          <i class="el-icon-chat-line-square" size="medium"></i>
-          <span class="navFont">Chat</span>
-        </el-menu-item>
+        <router-link to="/chat" style="text-decoration:none;">
+          <el-menu-item index="4" class="rightBtn">
+            <i class="el-icon-chat-line-square" size="medium"></i>
+            <span class="navFont">Chat</span>
+          </el-menu-item>
+        </router-link>
 
-        <el-submenu index="5" href="#" class="rightBtn" id="friendBtn">
+        <el-submenu index="5" href="#" class="rightBtn" id="followersBtn">
           <template slot="title">
             <font-awesome-icon
               icon="user-friends"
               size="lg"
-              style="margin-right:8px;color:#A9A9A9;"
+              style="color:#A9A9A9;margin-right:8px;"
             />
-            <span style="color:#fff;font-size:16px;">Friends</span>
+            <span id="followers" style="font-size:16px;">Followers</span>
           </template>
-          <el-menu-item class="rightBtn" index="5-1" href="#">Friends1</el-menu-item>
-          <el-menu-item class="rightBtn" index="5-2" href="#">Friends2</el-menu-item>
-          <el-menu-item class="rightBtn" index="5-3" href="#">Friends3</el-menu-item>
+          <el-menu-item class="rightBtn" index="5-1" href="#" id="dropDownBtn">追蹤者</el-menu-item>
+          <el-menu-item class="rightBtn" index="5-2" href="#" id="dropDownBtn">追蹤中的社團</el-menu-item>
         </el-submenu>
-        <el-menu-item index="6" href="#" class="rightBtn" data-toggle="modal" data-target="#Login">
-          <i class="el-icon-user-solid"></i>
-          <span class="navFont">User</span>
+
+        <!-- 登入狀態改變時會有不同的項目出現 -->
+        <!-- 未登入 -->
+        <el-menu-item
+          index="6"
+          href="#"
+          class="rightBtn"
+          data-toggle="modal"
+          data-target="#Login"
+          v-if="loginState === false"
+        >
+          <i class="el-icon-user-solid" style="color:#A9A9A9"></i>
+          <span class="navFont">Login</span>
         </el-menu-item>
+        <!-- 已登入 -->
+        <el-submenu index="6" href="#" class="rightBtn" v-if="loginState === true">
+          <template slot="title" class="rightBtn">
+            <i class="el-icon-user-solid" style="color:#A9A9A9"></i>
+            <span class="navFont">User</span>
+          </template>
+          <router-link to="/user/info" style="text-decoration:none;">
+            <el-menu-item class="rightBtn" index="6-1" href="#">個人資料</el-menu-item>
+          </router-link>
+          <el-menu-item class="rightBtn" index="6-2" href="#" id="dropDownBtn">發佈新活動</el-menu-item>
+          <el-menu-item class="rightBtn" index="6-3" @click.native="logout" id="dropDownBtn">登出</el-menu-item>
+        </el-submenu>
       </div>
     </el-menu>
     <label for="check">
       <font-awesome-icon class="checkBtn" icon="bars" size="lg" style="color:#A9A9A9" />
     </label>
-
     <Login></Login>
+    <register></register>
   </div>
 </template>  
 <script>
+import { mapActions } from "vuex";
+import { authenticated } from "@/utils/AuthStore";
 import Login from "@/components/Login";
-import { signin } from "@/api/auth";
-import { mapActions, mapGetters } from "vuex";
-import jquery from "jquery";
+import register from "@/components/Register";
+
 export default {
-  name: "Menubar",
+  name: "Navbar",
+
   data() {
     return {
-      input: "",
-      activeIndex: "1",
-      activeIndex2: "1",
       email: "",
       password: "",
+      search: "搜尋社團/活動",
       token: {
         tokenType: "",
         accessToken: ""
       },
-      search: "搜尋社團/活動"
+      activeIndex: "1",
+      activeIndex2: "1",
+      loginState: ""
     };
   },
+
   components: {
-    Login
+    Login,
+    register
   },
+
   methods: {
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
-    },
-    closeModal() {
-      jquery("#Login").modal("toggle");
-    },
-    login() {
-      var userInfo = {
-        email: this.email,
-        password: this.password
-      };
-      var jsonData = userInfo;
-      signin(jsonData)
-        .then(resp => {
-          this.token.tokenType = resp.data.tokenType;
-          this.token.accessToken = resp.data.accessToken;
-          const token = this.token;
-          this.storeToken(token);
-          this.closeModal();
-          this.$router.push("/");
-        })
-        .catch(err => {
-          console.log(err.message);
-          alert("抱歉，您輸入帳密有誤喔!");
-        });
-    },
-    ...mapActions({
-      storeToken: "auth/login"
-    }),
-    clickfunction() {
-      var x = document.getElementById("bar-links");
-      if (x.style.display == "none") {
-        x.style.display = "block";
-      } else {
-        x.style.display = "none";
-      }
     },
     // search的使用者友善
     searchOnfocus() {
@@ -124,12 +120,19 @@ export default {
       if (this.search === "") {
         this.search = "搜尋社團/活動";
       }
-    }
-  },
-  computed: {
-    ...mapGetters({
-      userInfo: "auth/userInfo"
+    },
+
+    ...mapActions({
+      logout: "auth/logout"
     })
+  },
+
+  mounted() {
+    if (authenticated()) {
+      this.loginState = true;
+    } else {
+      this.loginState = false;
+    }
   }
 };
 </script>
@@ -152,8 +155,12 @@ export default {
   margin-top: 10px;
   float: right;
 }
-#friendBtn {
+#followersBtn {
   width: 80px;
+}
+#followers {
+  color: white;
+  display: none;
 }
 #check {
   display: none;
@@ -163,28 +170,35 @@ export default {
   cursor: pointer;
   position: fixed;
   top: 20px;
-  right: 40px;
+  right: 30px;
 }
 .navFont {
   display: none;
 }
+#dropDownBtn:hover {
+  background-color: #fff5e4;
+}
 @media screen and (max-width: 910px) {
   .rightBtnGroup {
     position: fixed;
-    width: 20%;
+    width: 200px;
     height: 168px;
     top: 60px;
     flex-direction: column;
     right: 0;
     text-align: center;
     background-color: rgb(255, 180, 94);
-    right: -20%;
+    right: -200px;
     transition: all 0.3s ease;
   }
   .rightBtn {
     display: block;
     font-size: 16px;
     color: white;
+    text-decoration: none;
+  }
+  .rightBtn:hover {
+    color: black;
   }
   .checkBtn {
     display: block;
@@ -195,8 +209,46 @@ export default {
   #check:checked ~ .rightBtnGroup {
     right: 0;
   }
-  #friendBtn {
+  #followers:hover {
+    color: #000;
+  }
+  #followers {
+    display: inline;
+  }
+  #followersBtn {
     width: 100%;
+  }
+  font-awesome-icon {
+    color: white;
+  }
+}
+@media screen and (max-width: 767px) {
+  #inputArea {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 250px;
+  }
+}
+@media screen and (max-width: 485px) {
+  .checkBtn {
+    position: fixed;
+    top: 80px;
+    right: 10px;
+  }
+  .rightBtnGroup {
+    top: 120px;
+    width: 180px;
+  }
+}
+@media screen and (max-width: 410px) {
+  #fl h3 {
+    font-size: 1.5rem;
+    margin-top: 5px;
+  }
+  .logo {
+    height: 30px;
+    width: 55px;
   }
 }
 </style>
