@@ -1,6 +1,5 @@
 <template>
   <div class="Menubar-new">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <el-menu
       :default-active="activeIndex"
       class="el-menu-demo"
@@ -185,7 +184,6 @@ export default {
     height: 168px;
     top: 60px;
     flex-direction: column;
-    right: 0;
     text-align: center;
     background-color: rgb(255, 180, 94);
     right: -200px;
