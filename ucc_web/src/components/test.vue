@@ -1,259 +1,320 @@
 <template>
-  <div class="Chat">
-    <Navbar></Navbar>
-    <Menubar></Menubar>
-    <div class="container">
-      <div class="msg-header">
-        <div class="msg-header-container">
-          <a href="https://google.com">
-            <img
-              id="avatar"
-              src="http://ntcbadm1.ntub.edu.tw/Inc/ShowIndexStdImg.ashx?dataPic=10646029"
-              alt="Avatar"
-            />
-            <label for="avatar">Johnny Wang</label>
-          </a>
-        </div>
-      </div>
-      <div class="chatArea">chatArea</div>
-      <div class="friendList">
-        <div class="conversationList">
-          <div class="conversation">
-            <img
-              src="http://ntcbadm1.ntub.edu.tw/Inc/ShowIndexStdImg.ashx?dataPic=10646027"
-              alt="avatar"
-            />
-            <div class="conversation-name">Roger Wu</div>
-            <small class="conversation-content">對話內容，對話過長會出事</small>
-          </div>
-          <div class="conversation">
-            <img
-              src="http://ntcbadm1.ntub.edu.tw/Inc/ShowIndexStdImg.ashx?dataPic=10646027"
-              alt="avatar"
-            />
-            <div class="conversation-name">Roger Wu</div>
-            <small class="conversation-content">I Love U js</small>
-          </div>
-          <div class="conversation">
-            <img
-              src="http://ntcbadm1.ntub.edu.tw/Inc/ShowIndexStdImg.ashx?dataPic=10646027"
-              alt="avatar"
-            />
-            <div class="conversation-name">Roger Wu</div>
-            <small class="conversation-content">I Love U js</small>
-          </div>
-          <div class="conversation">
-            <img
-              src="http://ntcbadm1.ntub.edu.tw/Inc/ShowIndexStdImg.ashx?dataPic=10646027"
-              alt="avatar"
-            />
-            <div class="conversation-name">Roger Wu</div>
-            <small class="conversation-content">I Love U js</small>
-          </div>
-          <div class="conversation">
-            <img
-              src="http://ntcbadm1.ntub.edu.tw/Inc/ShowIndexStdImg.ashx?dataPic=10646027"
-              alt="avatar"
-            />
-            <div class="conversation-name">Roger Wu</div>
-            <small class="conversation-content">I Love U js</small>
-          </div>
-          <div class="conversation">
-            <img
-              src="http://ntcbadm1.ntub.edu.tw/Inc/ShowIndexStdImg.ashx?dataPic=10646027"
-              alt="avatar"
-            />
-            <div class="conversation-name">Roger Wu</div>
-            <small class="conversation-content">I Love U js</small>
-          </div>
-          <div class="conversation">
-            <img
-              src="http://ntcbadm1.ntub.edu.tw/Inc/ShowIndexStdImg.ashx?dataPic=10646027"
-              alt="avatar"
-            />
-            <div class="conversation-name">Roger Wu</div>
-            <small class="conversation-content">I Love U js</small>
-          </div>
-          <div class="conversation">
-            <img
-              src="http://ntcbadm1.ntub.edu.tw/Inc/ShowIndexStdImg.ashx?dataPic=10646027"
-              alt="avatar"
-            />
-            <div class="conversation-name">Roger Wu</div>
-            <small class="conversation-content">I Love U js</small>
-          </div>
-        </div>
-      </div>
-      <div class="inputArea">
-        <div class="inputArea-container">
-          <label style="margin-bottom:-3px;margin-right:1rem;">
-            <input type="file" style="display:none;" />
-            <font-awesome-icon icon="paperclip" size="lg" style="color:#fff;" />
-          </label>
-          <el-input v-model="input2" placeholder="请输入内容"></el-input>
-        </div>
-      </div>
-      <div class="searchFriend">
-        <el-input placeholder="搜尋朋友" prefix-icon="el-icon-search" v-model="input1" clearable></el-input>
-      </div>
-    </div>
-  </div>
-</template>
+  <div class="Menubar-new">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <el-menu
+      :default-active="activeIndex"
+      class="el-menu-demo"
+      mode="horizontal"
+      @select="handleSelect"
+    >
+      <input type="checkbox" id="check" />
+      <el-menu-item index="1" class="uccItem">
+        <Menubar class="menubar"></Menubar>
+        <router-link to="/">
+          <img class="logo" src="../../member/Eric/img/UCC Classic.jpg" />
+          <span id="fl">
+            <h3>University Club Center</h3>
+          </span>
+        </router-link>
+      </el-menu-item>
+      <el-menu-item id="inputArea">
+        <el-input v-model="search" @focus="searchOnfocus" @blur="searchOnblur" clearable>
+          <el-button slot="append" icon="el-icon-search"></el-button>
+        </el-input>
+      </el-menu-item>
 
+      <div class="rightBtnGroup">
+        <router-link to="/chat" style="text-decoration:none;">
+          <el-menu-item index="4" class="rightBtn">
+            <i class="el-icon-chat-line-square" size="medium"></i>
+            <span class="navFont">Chat</span>
+          </el-menu-item>
+        </router-link>
+
+        <el-submenu index="5" href="#" class="rightBtn" id="followersBtn">
+          <template slot="title">
+            <font-awesome-icon
+              icon="user-friends"
+              size="lg"
+              style="color:#A9A9A9;margin-right:8px;"
+            />
+            <span id="followers" style="font-size:16px;">Followers</span>
+          </template>
+          <el-menu-item class="rightBtn" index="5-1" href="#" id="dropDownBtn">追蹤者</el-menu-item>
+          <el-menu-item class="rightBtn" index="5-2" href="#" id="dropDownBtn">追蹤中的社團</el-menu-item>
+        </el-submenu>
+
+        <!-- 登入狀態改變時會有不同的項目出現 -->
+        <!-- 未登入 -->
+        <el-menu-item
+          index="6"
+          href="#"
+          class="rightBtn"
+          data-toggle="modal"
+          data-target="#Login"
+          v-if="loginState === false"
+        >
+          <i class="el-icon-user-solid" style="color:#A9A9A9"></i>
+          <span class="navFont">Login</span>
+        </el-menu-item>
+        <!-- 已登入 -->
+        <el-submenu index="6" href="#" class="rightBtn" v-if="loginState === true">
+          <template slot="title" class="rightBtn">
+            <i class="el-icon-user-solid" style="color:#A9A9A9"></i>
+            <span class="navFont">User</span>
+          </template>
+          <router-link to="/user/info" style="text-decoration:none;">
+            <el-menu-item class="rightBtn" index="6-1" href="#">個人資料</el-menu-item>
+          </router-link>
+          <el-menu-item class="rightBtn" index="6-2" href="#" id="dropDownBtn">發佈新活動</el-menu-item>
+          <el-menu-item class="rightBtn" index="6-3" @click.native="logout" id="dropDownBtn">登出</el-menu-item>
+        </el-submenu>
+      </div>
+    </el-menu>
+    <label for="check" @click="animation">
+      <div :class="toggleIsFalse ? 'toggle' : 'burger'">
+        <div class="line1"></div>
+        <div class="line2"></div>
+        <div class="line3"></div>
+      </div>
+    </label>
+    <Login></Login>
+    <register></register>
+  </div>
+</template>  
 <script>
+import { mapActions } from "vuex";
+import { authenticated } from "@/utils/AuthStore";
+import Login from "@/components/Login";
+import register from "@/components/Register";
 import Menubar from "@/components/Menubar";
-import Navbar from "@/components/Navbar";
+
 export default {
+  name: "Navbar",
+
   data() {
     return {
-      input1: "",
-      input2: ""
+      toggleIsFalse: false,
+      email: "",
+      password: "",
+      search: "搜尋社團/活動",
+      token: {
+        tokenType: "",
+        accessToken: ""
+      },
+      activeIndex: "1",
+      activeIndex2: "1",
+      loginState: ""
     };
   },
-  name: "Chat",
+
   components: {
-    Navbar,
+    Login,
+    register,
     Menubar
+  },
+
+  methods: {
+    handleSelect(key, keyPath) {
+      console.log(key, keyPath);
+    },
+    // search的使用者友善
+    searchOnfocus() {
+      if (this.search === "搜尋社團/活動") {
+        this.search = "";
+      }
+    },
+    searchOnblur() {
+      if (this.search === "") {
+        this.search = "搜尋社團/活動";
+      }
+    },
+    animation() {
+      if (this.toggleIsFalse === false) {
+        this.toggleIsFalse = true;
+      } else {
+        this.toggleIsFalse = false;
+      }
+    },
+
+    ...mapActions({
+      logout: "auth/logout"
+    })
+  },
+
+  mounted() {
+    if (authenticated()) {
+      this.loginState = true;
+    } else {
+      this.loginState = false;
+    }
   }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.container {
-  max-width: 800px;
-  max-height: 100vh;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(8, 1fr);
-  margin-top: 20px;
-  margin-left: 20%;
-  box-sizing: border-box;
-  padding: 0;
+.rightBtnGroup {
+  display: flex;
+  justify-content: flex-end;
 }
-.msg-header {
-  background-color: rgb(255, 148, 60);
-  grid-column: 1/4;
-  height: 10vh;
-  grid-row: 1/2;
-  border-top-right-radius: 10px;
-  border-top-left-radius: 10px;
-  border-bottom: white 1px solid;
+.Icon {
+  border: 0px;
 }
-.chatArea {
-  background-color: #eee;
-  grid-column: 1/3;
-  grid-row: 2/8;
-  border-left: rgb(255, 148, 60) 2px solid;
+.logo {
+  height: 40px;
+  width: 70px;
+  margin: 0 13px 5px 70px;
 }
-.friendList {
-  background-color: #ccc;
-  grid-row: 2/8;
-  overflow-y: hidden;
-  max-height: 60vh;
-}
-.friendList:hover {
-  overflow-y: scroll;
-}
-.inputArea {
-  background-color: rgb(255, 148, 60);
-  grid-row: 8/9;
-  grid-column: 1/3;
-  border-bottom-left-radius: 10px;
-  border-right: #fff 1px solid;
-}
-.searchFriend {
-  background-color: rgb(255, 148, 60);
-  grid-row: 8/9;
-  padding: 0 1rem 0 1rem;
-  display: grid;
-  align-items: center;
-  border-bottom-right-radius: 10px;
-}
-.searchFriend el-input {
-  border-radius: 30px;
-}
-.msg-header-container img {
-  height: 50px;
+.menubar {
   width: 50px;
-  border-radius: 50%;
-  margin: -10px 20px 0 20px;
-  cursor: pointer;
 }
-.msg-header-container {
-  display: flex;
-  justify-content: start;
-  align-items: center;
-  line-height: 10vh;
+#fl {
+  margin-top: 10px;
+  float: right;
 }
-.msg-header-container label {
+#followersBtn {
+  width: 80px;
+}
+#followers {
   color: white;
-  font-weight: bold;
-  font-size: 1.2rem;
+  display: none;
+}
+#check {
+  display: none;
+}
+.burger {
+  display: none;
   cursor: pointer;
+  position: fixed;
+  top: 15px;
+  right: 20px;
 }
-.msg-header-container label:hover {
-  text-decoration: underline;
-}
-.inputArea-container {
-  display: flex;
-  justify-content: start;
-  align-items: center;
-  height: 100%;
-  padding: 0 1rem 0 1rem;
-}
-.inputArea-container label {
-  transition: all 0.8s ease;
+.toggle {
+  display: none;
   cursor: pointer;
+  position: fixed;
+  top: 15px;
+  right: 20px;
 }
-.inputArea-container label:hover {
-  transform: scale(1.3, 1.3);
+.navFont {
+  display: none;
 }
-.conversation {
-  padding: 10px;
-  background-color: rgb(255, 150, 80);
-  height: 80px;
-  display: flex;
-  justify-content: start;
-  align-items: center;
-  border-bottom: white 1px solid;
-  color: white;
-  transition: all 0.3s ease;
+#dropDownBtn:hover {
+  background-color: #fff5e4;
 }
-.conversation:hover {
-  background: rgb(245, 168, 116);
+
+.burger div {
+  width: 25px;
+  height: 3px;
+  background-color: orange;
+  margin: 5px;
+  transition: all 0.2s ease-in;
 }
-.conversation img {
-  height: 45px;
-  width: 45px;
-  border-radius: 50%;
+.toggle div {
+  transition: all 0.2s ease-in;
 }
-.conversation-name {
-  align-self: start;
-  margin: 5px 0 0 5px;
-  font-weight: bold;
+
+.toggle .line1 {
+  transform: rotate(-45deg) translate(-5px, 6px);
+  width: 25px;
+  height: 3px;
+  background-color: orange;
+  margin: 5px;
 }
-.conversation-content {
-  margin: 10px 0 0 -73px;
-  overflow-x: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  color: #ddd;
+.toggle .line2 {
+  opacity: 0;
 }
-::-webkit-scrollbar {
-  width: 7px;
+.toggle .line3 {
+  transform: rotate(45deg) translate(0px, 0px);
+  width: 25px;
+  height: 3px;
+  background-color: orange;
+  margin: 5px;
 }
-::-webkit-scrollbar-track {
-  -webkit-border-radius: 10px;
-  border-radius: 10px;
-  background-color: #f5f5f5;
+@media screen and (max-width: 980px) {
+  .rightBtnGroup {
+    position: fixed;
+    width: 200px;
+    height: 168px;
+    top: 60px;
+    flex-direction: column;
+    right: 0;
+    text-align: center;
+    background-color: rgb(255, 180, 94);
+    right: -200px;
+    transition: all 0.3s ease;
+  }
+  .rightBtn {
+    display: block;
+    font-size: 16px;
+    color: white;
+    text-decoration: none;
+  }
+  .rightBtn:hover {
+    color: black;
+  }
+  .burger {
+    display: block;
+  }
+  .toggle {
+    display: block;
+  }
+  .navFont {
+    display: inline;
+  }
+  #check:checked ~ .rightBtnGroup {
+    right: 0;
+  }
+  #followers:hover {
+    color: #000;
+  }
+  #followers {
+    display: inline;
+  }
+  #followersBtn {
+    width: 100%;
+  }
+  font-awesome-icon {
+    color: white;
+  }
 }
-::-webkit-scrollbar-thumb {
-  -webkit-border-radius: 4px;
-  border-radius: 4px;
-  background: #bbb;
+@media screen and (max-width: 837px) {
+  #inputArea {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 250px;
+  }
 }
-/* ::-webkit-scrollbar:hover {
-  display: contents;
-} */
+@media screen and (max-width: 555px) {
+  .burger {
+    position: fixed;
+    top: 80px;
+    right: 10px;
+  }
+  .toggle {
+    position: fixed;
+    top: 80px;
+    right: 10px;
+  }
+  .rightBtnGroup {
+    top: 120px;
+    width: 180px;
+  }
+}
+@media screen and (max-width: 480px) {
+  #fl h3 {
+    font-size: 1.5rem;
+    margin-top: 5px;
+  }
+  .logo {
+    height: 30px;
+    width: 55px;
+    margin-left: 50px;
+  }
+  .uccItem {
+    padding: 0;
+  }
+}
 </style>

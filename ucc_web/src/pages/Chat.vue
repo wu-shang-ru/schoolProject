@@ -132,7 +132,7 @@ export default {
   padding: 0;
 }
 .msg-header {
-  background-color: rgb(255, 148, 60);
+  background-image: linear-gradient(135deg, #f57852 0%, rgb(255, 150, 80) 100%);
   grid-column: 1/4;
   height: 10vh;
   grid-row: 1/2;
@@ -141,13 +141,11 @@ export default {
   border-bottom: white 1px solid;
 }
 .chatArea {
-  background-color: #eee;
+  background-color: #fec163;
   grid-column: 1/3;
   grid-row: 2/8;
-  border-left: rgb(255, 148, 60) 2px solid;
 }
 .friendList {
-  background-color: #ccc;
   grid-row: 2/8;
   overflow-y: hidden;
   max-height: 60vh;
@@ -156,14 +154,15 @@ export default {
   overflow-y: scroll;
 }
 .inputArea {
-  background-color: rgb(255, 148, 60);
+  background-image: linear-gradient(180deg, #fec163 10%, #e77a58 100%);
   grid-row: 8/9;
   grid-column: 1/3;
   border-bottom-left-radius: 10px;
   border-right: #fff 1px solid;
+  border-top: white 1px solid;
 }
 .searchFriend {
-  background-color: rgb(255, 148, 60);
+  background-image: linear-gradient(180deg, #fec163 10%, #e77a58 100%);
   grid-row: 8/9;
   padding: 0 1rem 0 1rem;
   display: grid;
@@ -182,7 +181,7 @@ export default {
 }
 .msg-header-container {
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
   line-height: 10vh;
 }
@@ -197,13 +196,13 @@ export default {
 }
 .inputArea-container {
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
   height: 100%;
   padding: 0 1rem 0 1rem;
 }
 .inputArea-container label {
-  transition: all 0.8s ease;
+  transition: all 0.3s ease;
   cursor: pointer;
 }
 .inputArea-container label:hover {
@@ -211,10 +210,11 @@ export default {
 }
 .conversation {
   padding: 10px;
-  background-color: rgb(255, 150, 80);
+  background-color: #ff6348;
+  /* background-image: linear-gradient(135deg, #ff9d6c 10%, #bb4e75 100%); */
   height: 80px;
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
   border-bottom: white 1px solid;
   color: white;
@@ -229,7 +229,7 @@ export default {
   border-radius: 50%;
 }
 .conversation-name {
-  align-self: start;
+  align-self: flex-start;
   margin: 5px 0 0 5px;
   font-weight: bold;
 }

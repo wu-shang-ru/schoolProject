@@ -1,7 +1,6 @@
 <template>
   <div class="HomePage">
     <Navbar></Navbar>
-    <menubar></menubar>
     <Banner></Banner>
     <ContentList></ContentList>
     <Login></Login>
@@ -13,7 +12,6 @@
 <script>
 import ContentList from "@/components/ContentList";
 import Navbar from "@/components/Navbar";
-import Menubar from "@/components/Menubar";
 import Banner from "@/components/Banner";
 
 export default {
@@ -21,7 +19,6 @@ export default {
   components: {
     ContentList,
     Navbar,
-    Menubar,
     Banner
   }
 };
