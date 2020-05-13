@@ -7,7 +7,8 @@
       @select="handleSelect"
     >
       <input type="checkbox" id="check" />
-      <el-menu-item index="1">
+      <el-menu-item index="1" class="uccItem">
+        <Menubar class="menubar"></Menubar>
         <router-link to="/">
           <img class="logo" src="../../member/Eric/img/UCC Classic.jpg" />
           <span id="fl">
@@ -69,8 +70,12 @@
         </el-submenu>
       </div>
     </el-menu>
-    <label for="check">
-      <font-awesome-icon class="checkBtn" icon="bars" size="lg" style="color:#A9A9A9" />
+    <label for="check" @click="animation">
+      <div :class="toggleIsFalse ? 'toggle' : 'burger'">
+        <div class="line1"></div>
+        <div class="line2"></div>
+        <div class="line3"></div>
+      </div>
     </label>
     <Login></Login>
     <register></register>
@@ -81,12 +86,14 @@ import { mapActions } from "vuex";
 import { authenticated } from "@/utils/AuthStore";
 import Login from "@/components/Login";
 import register from "@/components/Register";
+import Menubar from "@/components/Menubar";
 
 export default {
   name: "Navbar",
 
   data() {
     return {
+      toggleIsFalse: false,
       email: "",
       password: "",
       search: "搜尋社團/活動",
@@ -102,7 +109,8 @@ export default {
 
   components: {
     Login,
-    register
+    register,
+    Menubar
   },
 
   methods: {
@@ -118,6 +126,13 @@ export default {
     searchOnblur() {
       if (this.search === "") {
         this.search = "搜尋社團/活動";
+      }
+    },
+    animation() {
+      if (this.toggleIsFalse === false) {
+        this.toggleIsFalse = true;
+      } else {
+        this.toggleIsFalse = false;
       }
     },
 
@@ -148,7 +163,10 @@ export default {
 .logo {
   height: 40px;
   width: 70px;
-  margin: 0 13px 5px 0;
+  margin: 0 13px 5px 70px;
+}
+.menubar {
+  width: 50px;
 }
 #fl {
   margin-top: 10px;
@@ -164,12 +182,19 @@ export default {
 #check {
   display: none;
 }
-.checkBtn {
+.burger {
   display: none;
   cursor: pointer;
   position: fixed;
-  top: 20px;
-  right: 30px;
+  top: 15px;
+  right: 20px;
+}
+.toggle {
+  display: none;
+  cursor: pointer;
+  position: fixed;
+  top: 15px;
+  right: 20px;
 }
 .navFont {
   display: none;
@@ -177,7 +202,36 @@ export default {
 #dropDownBtn:hover {
   background-color: #fff5e4;
 }
-@media screen and (max-width: 910px) {
+
+.burger div {
+  width: 25px;
+  height: 3px;
+  background-color: orange;
+  margin: 5px;
+  transition: all 0.2s ease-in;
+}
+.toggle div {
+  transition: all 0.2s ease-in;
+}
+
+.toggle .line1 {
+  transform: rotate(-45deg) translate(-5px, 6px);
+  width: 25px;
+  height: 3px;
+  background-color: orange;
+  margin: 5px;
+}
+.toggle .line2 {
+  opacity: 0;
+}
+.toggle .line3 {
+  transform: rotate(45deg) translate(0px, 0px);
+  width: 25px;
+  height: 3px;
+  background-color: orange;
+  margin: 5px;
+}
+@media screen and (max-width: 980px) {
   .rightBtnGroup {
     position: fixed;
     width: 200px;
@@ -198,7 +252,10 @@ export default {
   .rightBtn:hover {
     color: black;
   }
-  .checkBtn {
+  .burger {
+    display: block;
+  }
+  .toggle {
     display: block;
   }
   .navFont {
@@ -220,7 +277,7 @@ export default {
     color: white;
   }
 }
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 837px) {
   #inputArea {
     position: fixed;
     top: 60px;
@@ -228,8 +285,13 @@ export default {
     width: 250px;
   }
 }
-@media screen and (max-width: 485px) {
-  .checkBtn {
+@media screen and (max-width: 555px) {
+  .burger {
+    position: fixed;
+    top: 80px;
+    right: 10px;
+  }
+  .toggle {
     position: fixed;
     top: 80px;
     right: 10px;
@@ -237,9 +299,10 @@ export default {
   .rightBtnGroup {
     top: 120px;
     width: 180px;
+    z-index: 2;
   }
 }
-@media screen and (max-width: 410px) {
+@media screen and (max-width: 480px) {
   #fl h3 {
     font-size: 1.5rem;
     margin-top: 5px;
@@ -247,6 +310,10 @@ export default {
   .logo {
     height: 30px;
     width: 55px;
+    margin-left: 50px;
+  }
+  .uccItem {
+    padding: 0;
   }
 }
 </style>
