@@ -117,4 +117,11 @@ export default {
   padding-top: 8px;
   padding-right: 10px;
 }
+
+@media (max-width: 995px) {
+  .ContentList {
+    background-color: aqua;
+    width: 750px;
+  }
+}
 </style>
